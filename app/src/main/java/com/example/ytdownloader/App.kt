@@ -15,7 +15,6 @@ class App : Application() {
         // (e.g. ABI/asset issue) the app still boots; downloads surface the error.
         try {
             YoutubeDL.getInstance().init(this)
-            YoutubeDL.getInstance().initFFmpeg(this)
         } catch (e: Exception) {
             Log.e("YTDownloader", "Failed to init YoutubeDL/ffmpeg", e)
         }
