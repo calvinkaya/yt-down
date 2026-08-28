@@ -14,6 +14,8 @@ object AppState {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     val progress = MutableStateFlow<DownloadProgress?>(null)
+    // Set when YoutubeDL.getInstance().init() fails at startup; shown on download.
+    val initError = MutableStateFlow<String?>(null)
     val done = MutableSharedFlow<DoneEvent>(extraBufferCapacity = 16)
     val error = MutableSharedFlow<ErrorEvent>(extraBufferCapacity = 16)
     val fallback = MutableSharedFlow<FallbackAsk>(extraBufferCapacity = 4)

@@ -125,7 +125,10 @@ object DownloadManager {
                     DownloadKind.MP3 -> openMp3Flow(req.videoId)
                 }
             } catch (e: Exception) {
-                AppState.error.emit(ErrorEvent(req.videoId, e.message ?: "Download failed."))
+                val raw = e.message ?: "Download failed."
+                val initErr = AppState.initError.value
+                val msg = if (raw.contains("not initialis", ignoreCase = true) && initErr != null) initErr else raw
+                AppState.error.emit(ErrorEvent(req.videoId, msg))
             } finally {
                 val empty: Boolean
                 synchronized(inFlight) {
