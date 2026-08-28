@@ -9,6 +9,7 @@ import com.example.ytdownloader.data.AppState
 import com.example.ytdownloader.data.Store
 import com.example.ytdownloader.download.DownloadManager
 import com.yausername.youtubedl_android.YoutubeDL
+import com.yausername.ffmpeg.FFmpeg
 
 class App : Application() {
     private val mainHandler = Handler(Looper.getMainLooper())
@@ -27,7 +28,7 @@ class App : Application() {
                 YoutubeDL.getInstance().init(this)
                 // REQUIRED: unpacks ffmpeg and tells yt-dlp where it is. Without
                 // this, bestvideo+bestaudio merges and MP3 encode (`-x`) both fail.
-                YoutubeDL.getInstance().initFFmpeg(this)
+                FFmpeg.getInstance().init(this)
                 AppState.initError.value = null
             } catch (e: Exception) {
                 val msg = "Downloader failed to start: ${e.message ?: e.javaClass.simpleName}"
