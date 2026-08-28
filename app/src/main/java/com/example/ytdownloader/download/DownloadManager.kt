@@ -14,7 +14,6 @@ import com.example.ytdownloader.data.VideoEntry
 import com.yausername.youtubedl_android.YoutubeDL
 import com.yausername.youtubedl_android.YoutubeDLRequest
 import com.yausername.youtubedl_android.YoutubeDLResponse
-import com.yausername.youtubedl_android.interfaces.DownloadProgressCallback
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -383,11 +382,10 @@ object DownloadManager {
     ): YoutubeDLResponse {
         activeProcessId = processId
         try {
-            return YoutubeDL.getInstance().execute(request, processId, object : DownloadProgressCallback {
-                override fun onProgressUpdate(progress: Float, etaInSeconds: Long, line: String) {
-                    val pct = ProgressParser.parse(line) ?: progress.toDouble()
-                    onProgress(pct)
-                }
+            return YoutubeDL.getInstance().execute(request, processId) { progress, etaInSeconds, line ->
+                val pct = ProgressParser.parse(line) ?: progress.toDouble()
+                onProgress(pct)
+            }
             })
         } finally {
             activeProcessId = null
