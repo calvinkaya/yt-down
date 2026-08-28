@@ -7,7 +7,6 @@ import com.example.ytdownloader.data.AppState
 import com.example.ytdownloader.data.Store
 import com.example.ytdownloader.download.DownloadManager
 import com.yausername.youtubedl_android.YoutubeDL
-import com.yausername.youtubedl_android.enums.UpdateChannel
 
 class App : Application() {
     override fun onCreate() {
@@ -34,7 +33,7 @@ class App : Application() {
         // background to a version the library's launcher actually supports.
         Thread {
             try {
-                YoutubeDL.getInstance().updateYoutubeDL(this, UpdateChannel.STABLE, null)
+                YoutubeDL.getInstance().updateYoutubeDL(this)
                 Log.i("YTDownloader", "yt-dlp updated")
             } catch (e: Exception) {
                 Log.e("YTDownloader", "yt-dlp update failed", e)
