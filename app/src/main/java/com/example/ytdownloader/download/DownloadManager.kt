@@ -386,7 +386,6 @@ object DownloadManager {
                 val pct = ProgressParser.parse(line) ?: progress.toDouble()
                 onProgress(pct)
             }
-            })
         } finally {
             activeProcessId = null
         }
