@@ -1,5 +1,6 @@
 package com.example.ytdownloader.data
 
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,6 +17,8 @@ object AppState {
     val progress = MutableStateFlow<DownloadProgress?>(null)
     // Set when YoutubeDL.getInstance().init() fails at startup; shown on download.
     val initError = MutableStateFlow<String?>(null)
+    // Completes once yt-dlp is initialized + updated; downloads await this.
+    val downloaderReady = CompletableDeferred<Unit>()
     val done = MutableSharedFlow<DoneEvent>(extraBufferCapacity = 16)
     val error = MutableSharedFlow<ErrorEvent>(extraBufferCapacity = 16)
     val fallback = MutableSharedFlow<FallbackAsk>(extraBufferCapacity = 4)

@@ -119,6 +119,7 @@ object DownloadManager {
 
     private suspend fun processLoop() {
         for (req in queue) {
+            AppState.downloaderReady.await() // wait for init + yt-dlp update
             try {
                 when (req.kind) {
                     DownloadKind.VIDEO -> openVideoFlow(req.videoId)
